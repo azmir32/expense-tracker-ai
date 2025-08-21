@@ -1,6 +1,7 @@
 'use server';
 import { db } from '@/lib/db';
 import { auth } from '@clerk/nextjs/server';
+import { Record } from '@/types/Record';
 
 async function getUserRecord(): Promise<{
   record?: number;
@@ -18,11 +19,11 @@ async function getUserRecord(): Promise<{
       where: { userId },
     });
 
-    const record = records.reduce((sum: number, record: any) => sum + record.amount, 0);
+    const record = records.reduce((sum: number, record: Record) => sum + record.amount, 0);
 
-    // Count the number of days with valid sleep records
+    // Count the number of days with valid expense records
     const daysWithRecords = records.filter(
-      (record: any) => record.amount > 0
+      (record: Record) => record.amount > 0
     ).length;
 
     return { record, daysWithRecords };
