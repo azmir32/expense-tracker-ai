@@ -5,7 +5,7 @@ import Guest from '@/app/components/Guest';
 import RecordChart from '@/app/components/RecordChart';
 import RecordHistory from '@/app/components/RecordHistory';
 import { currentUser } from '@clerk/nextjs/server';
-import { checkUser } from '@/app/lib/checkUser';
+import { checkUser } from '@/lib/checkUser';
 
 export default async function HomePage() {
   const user = await currentUser();

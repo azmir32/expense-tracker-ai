@@ -1,6 +1,6 @@
 'use server';
 
-import { categorizeExpense } from '@/app/lib/ai';
+import { categorizeExpense } from '@/lib/ai';
 
 export async function suggestCategory(
   description: string
