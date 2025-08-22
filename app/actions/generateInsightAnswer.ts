@@ -1,8 +1,8 @@
 'use server';
 
-import { checkUser } from '@/lib/checkUser';
-import { db } from '@/lib/db';
-import { generateAIAnswer, ExpenseRecord } from '@/lib/ai';
+import { checkUser } from '../../lib/checkUser';
+import { db } from '../../lib/db';
+import { generateAIAnswer, ExpenseRecord } from '../../lib/ai';
 
 export async function generateInsightAnswer(question: string): Promise<string> {
   try {

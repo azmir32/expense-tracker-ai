@@ -193,17 +193,19 @@ const BarChart = ({ records }: { records: Record[] }) => {
         cornerRadius: 8,
         displayColors: false,
         callbacks: {
-          title: (context: any) => {
+          title: (context: unknown) => {
             try {
-              return `Date: ${context[0].label}`;
+              const ctx = context as { [0]: { label: string } };
+              return `Date: ${ctx[0].label}`;
             } catch (error) {
               console.error('❌ BarChart: Error in tooltip title callback:', error);
               return 'Date: Unknown';
             }
           },
-          label: (context: any) => {
+          label: (context: unknown) => {
             try {
-              return `Amount: $${context.parsed.y.toFixed(2)}`;
+              const ctx = context as { parsed: { y: number } };
+              return `Amount: $${ctx.parsed.y.toFixed(2)}`;
             } catch (error) {
               console.error('❌ BarChart: Error in tooltip label callback:', error);
               return 'Amount: $0.00';
@@ -233,9 +235,10 @@ const BarChart = ({ records }: { records: Record[] }) => {
           font: {
             size: isMobile ? 10 : 12,
           },
-          callback: (value: any) => {
+          callback: (value: unknown) => {
             try {
-              return `$${value}`;
+              const val = value as number;
+              return `$${val}`;
             } catch (error) {
               console.error('❌ BarChart: Error in y-axis tick callback:', error);
               return '$0';

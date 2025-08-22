@@ -1,6 +1,6 @@
-import getRecords from '@/app/actions/getRecords';
-import RecordItem from '@/app/components/RecordItem';
-import { Record } from '@/types/Record';
+import getRecords from '../actions/getRecords';
+import RecordItem from './RecordItem';
+import { Record } from '../../types/Record';
 
 const RecordHistory = async () => {
   const { records, error } = await getRecords();

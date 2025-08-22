@@ -1,7 +1,10 @@
-import { test as base } from '@playwright/test';
+import { test as base, type Page } from '@playwright/test';
 
 // Extend the test type to include authentication state
-export const test = base.extend({
+export const test = base.extend<{
+  authenticatedPage: Page;
+  guestPage: Page;
+}>({
   // Authenticated state
   authenticatedPage: async ({ page }, use) => {
     // This would be where you set up authentication state
