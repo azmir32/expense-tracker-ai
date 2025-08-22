@@ -1,8 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { getAIInsights } from '@/app/actions/getAiInsight';
-import { generateInsightAnswer } from '@/app/actions/generateInsightAnswer';
+import { getAIInsights } from '../actions/getAiInsight';
+import { generateInsightAnswer } from '../actions/generateInsightAnswer';
 
 interface InsightData {
   id: string;

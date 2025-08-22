@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
-import { Record } from '@/types/Record';
-import deleteRecord from '@/app/actions/deleteRecord';
+import { Record } from '../../types/Record';
+import deleteRecord from '../actions/deleteRecord';
 
 // Helper function to get category emoji
 const getCategoryEmoji = (category: string) => {
@@ -25,11 +25,31 @@ const getCategoryEmoji = (category: string) => {
 
 const RecordItem = ({ record }: { record: Record }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleDeleteRecord = async (recordId: string) => {
-    setIsLoading(true); // Show loading spinner
-    await deleteRecord(recordId); // Perform delete operation
-    setIsLoading(false); // Hide loading spinner
+    try {
+      console.log(`🗑️ RecordItem: Starting deletion of record ${recordId}...`);
+      console.log(`📊 RecordItem: Record details - Amount: $${record.amount}, Category: ${record.category}, Text: "${record.text}"`);
+      
+      setIsLoading(true); // Show loading spinner
+      setError(null); // Clear any previous errors
+
+      const result = await deleteRecord(recordId); // Perform delete operation
+      
+      if (result.error) {
+        console.error('❌ RecordItem: Delete operation failed:', result.error);
+        setError(result.error);
+      } else {
+        console.log('✅ RecordItem: Record deleted successfully');
+        // The page will revalidate automatically due to revalidatePath in the server action
+      }
+    } catch (error) {
+      console.error('❌ RecordItem: Unexpected error during record deletion:', error);
+      setError('Failed to delete record. Please try again.');
+    } finally {
+      setIsLoading(false); // Hide loading spinner
+    }
   };
 
   // Determine border color based on expense amount
@@ -75,6 +95,16 @@ const RecordItem = ({ record }: { record: Record }) => {
         )}
       </button>
 
+      {/* Error message */}
+      {error && (
+        <div className='absolute -top-8 left-0 right-0 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-2 text-xs text-red-700 dark:text-red-300 z-10'>
+          <div className='flex items-center gap-1'>
+            <span>⚠️</span>
+            <span>{error}</span>
+          </div>
+        </div>
+      )}
+
       {/* Content area with proper spacing */}
       <div className='flex-1 flex flex-col justify-between'>
         <div className='space-y-2 sm:space-y-3'>
@@ -98,7 +128,7 @@ const RecordItem = ({ record }: { record: Record }) => {
         </div>
 
         <div className='text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-2'>
-          <p className='truncate break-words line-clamp-2'>{record?.text}</p>
+          {record?.text}
         </div>
       </div>
     </li>
