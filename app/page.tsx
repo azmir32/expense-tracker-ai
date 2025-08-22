@@ -1,5 +1,5 @@
 import AddNewRecord from './components/AddNewRecord';
-import AIInsights from './components/AIInsights';
+import Insights from './components/Insights';
 import ExpenseStats from './components/ExpenseStats';
 import Guest from './components/Guest';
 import RecordChart from './components/RecordChart';
@@ -117,7 +117,7 @@ export default async function HomePage() {
               <RecordChart />
               <ExpenseStats />
               <RecordHistory />
-              <AIInsights />
+              <Insights />
             </div>
           </div>
         </div>
